@@ -59,32 +59,28 @@ st.dataframe(df_selection)  # view dataframe on page
 
 # ------------------------------ Visualisasi yang lain ---------------------------
 
-col1, col2 = st.columns(2)
+pie_chart = px.pie(df,
+                   title="<b>BAP Tilang Tiap Wilayah</b>",
+                   values='bap_tilang',
+                   names='wilayah')
 
-with col1:
-    pie_chart = px.pie(df,
-                       title="<b>BAP Tilang Tiap Wilayah</b>",
-                       values='bap_tilang',
-                       names='wilayah')
-
-    st.plotly_chart(pie_chart)
+st.plotly_chart(pie_chart)
 
 # ================================================================================
 
-with col2:
-    databar_chart_pelanggaran_lalu_lintas = (
-        df_selection.groupby(by=["wilayah"]).sum()[
-            ["penderekan"]].sort_values(by="penderekan")
-    )
-    bar_chart = px.bar(databar_chart_pelanggaran_lalu_lintas,
-                       x=databar_chart_pelanggaran_lalu_lintas.index,
-                       y='penderekan',
-                       text='penderekan',
-                       title="<b>Penderekan Berdasarkan Wilayah</b>",
-                       color_discrete_sequence=[
-                           '#F63366']*len(databar_chart_pelanggaran_lalu_lintas),
-                       template='plotly_white')
-    st.plotly_chart(bar_chart)
+databar_chart_pelanggaran_lalu_lintas = (
+    df_selection.groupby(by=["wilayah"]).sum()[
+        ["penderekan"]].sort_values(by="penderekan")
+)
+bar_chart = px.bar(databar_chart_pelanggaran_lalu_lintas,
+                   x=databar_chart_pelanggaran_lalu_lintas.index,
+                   y='penderekan',
+                   text='penderekan',
+                   title="<b>Penderekan Berdasarkan Wilayah</b>",
+                   color_discrete_sequence=[
+                       '#F63366']*len(databar_chart_pelanggaran_lalu_lintas),
+                   template='plotly_white')
+st.plotly_chart(bar_chart)
 
 # ================================================================================
 
